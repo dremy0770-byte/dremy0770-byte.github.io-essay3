@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>묻지 않고 믿는다 — 육아 철학 에세이</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #0F1117;
+    --bg-2:        #161B26;
+    --bg-3:        #1C2333;
+    --ink:         #E8EAF0;
+    --ink-soft:    #8A92A8;
+    --accent:      #7EB8C9;
+    --accent-dim:  #2A4F5E;
+    --line:        #252D40;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 300;
+    line-height: 1.9;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 45% at 15% 75%, rgba(126,184,201,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 40% at 85% 20%, rgba(126,184,201,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* subtle grid texture */
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(126,184,201,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(126,184,201,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  .cover-ornament {
+    width: 1px;
+    height: 72px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    margin-bottom: 36px;
+    animation: fadeDown 1.2s ease forwards;
+    opacity: 0;
+  }
+
+  .cover-label {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 1s ease 0.3s forwards;
+    opacity: 0;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 9vw, 88px);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 22px;
+    animation: fadeUp 1s ease 0.5s forwards;
+    opacity: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-subtitle {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeUp 1s ease 0.7s forwards;
+    opacity: 0;
+  }
+
+  .cover-divider {
+    width: 56px;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto 52px;
+    animation: expandWidth 1s ease 0.9s forwards;
+    transform: scaleX(0);
+    transform-origin: center;
+  }
+
+  .cover-quote {
+    max-width: 320px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 2.1;
+    color: var(--ink-soft);
+    font-style: italic;
+    animation: fadeUp 1s ease 1.1s forwards;
+    opacity: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeUp 1s ease 1.4s forwards;
+    opacity: 0;
+  }
+
+  .scroll-hint span {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--line);
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent-dim), transparent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* ── TOC ── */
+  .toc-section {
+    background: var(--bg-2);
+    padding: 80px 40px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .toc-inner { max-width: 520px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: block;
+  }
+
+  .toc-list { list-style: none; }
+
+  .toc-list li { border-bottom: 1px solid var(--line); }
+  .toc-list li:first-child { border-top: 1px solid var(--line); }
+
+  .toc-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    transition: color 0.25s;
+  }
+
+  .toc-list a:hover { color: var(--accent); }
+
+  .toc-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--accent-dim);
+    margin-left: 20px;
+    transition: color 0.25s;
+  }
+
+  .toc-list a:hover .toc-num { color: var(--accent); }
+
+  /* ── CHAPTERS ── */
+  .chapter {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.85s ease, transform 0.85s ease;
+  }
+
+  .chapter.visible { opacity: 1; transform: translateY(0); }
+  .chapter + .chapter { border-top: 1px solid var(--line); }
+
+  .chapter-header { margin-bottom: 52px; }
+
+  .chapter-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 60px;
+    color: var(--accent-dim);
+    line-height: 1;
+    margin-bottom: -8px;
+    display: block;
+  }
+
+  .chapter-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    color: var(--ink);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 14px;
+    display: inline-block;
+  }
+
+  .chapter-body p {
+    font-size: 15.5px;
+    line-height: 2.05;
+    color: #C5CAD8;
+    margin-bottom: 28px;
+    word-break: keep-all;
+  }
+
+  .chapter-body p:last-child { margin-bottom: 0; }
+
+  .pullquote {
+    border-left: 1px solid var(--accent);
+    padding: 18px 28px;
+    margin: 44px 0;
+    background: var(--bg-3);
+  }
+
+  .pullquote p {
+    font-style: italic;
+    font-size: 15.5px !important;
+    color: var(--accent) !important;
+    margin: 0 !important;
+    line-height: 1.95 !important;
+  }
+
+  /* ── CLOSING ── */
+  .closing {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    padding: 100px 40px;
+    text-align: center;
+  }
+
+  .closing-inner { max-width: 460px; margin: 0 auto; }
+
+  .closing-ornament {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 64px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 36px;
+    opacity: 0.25;
+  }
+
+  .closing-text {
+    font-size: 15px;
+    line-height: 2.1;
+    color: var(--ink-soft);
+    margin-bottom: 48px;
+    font-style: italic;
+    word-break: keep-all;
+  }
+
+  .closing-author {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--accent);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes expandWidth {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.2; }
+    50%       { opacity: 0.8; }
+  }
+
+  @media (max-width: 480px) {
+    .cover-title { font-size: 44px; }
+    .chapter { padding: 68px 24px; }
+    .toc-section { padding: 60px 24px; }
+  }
+
+  @media print {
+    body { background: #fff; color: #111; }
+    .scroll-hint { display: none; }
+    .chapter { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="cover-ornament"></div>
+  <div class="cover-label">육아 철학 에세이</div>
+  <h1 class="cover-title">묻지 않고 믿는다</h1>
+  <p class="cover-subtitle">나답게 살면서, 더불어 살기를</p>
+  <div class="cover-divider"></div>
+  <p class="cover-quote">아이가 태어나는 순간,<br>역할은 명확히 달라진다.<br>그러나 믿음은 언제나 먼저다.</p>
+  <div class="scroll-hint"><span>scroll</span></div>
+</section>
+
+<!-- TOC -->
+<section class="toc-section">
+  <div class="toc-inner">
+    <span class="section-label">목차 · Contents</span>
+    <ul class="toc-list">
+      <li><a href="#ch1">잘 놀아야 잘 큰다 <span class="toc-num">I</span></a></li>
+      <li><a href="#ch2">시스템 밖의 아이들 <span class="toc-num">II</span></a></li>
+      <li><a href="#ch3">받아쓰기 점수보다 중요한 것 <span class="toc-num">III</span></a></li>
+      <li><a href="#ch4">리액션이 좋은 아이 <span class="toc-num">IV</span></a></li>
+      <li><a href="#ch5">멀리 있어도 손이 간다 <span class="toc-num">V</span></a></li>
+      <li><a href="#ch6">나 자신을 지키는 법 <span class="toc-num">VI</span></a></li>
+      <li><a href="#ch7">동등한 대화 <span class="toc-num">VII</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CH 1 -->
+<article class="chapter" id="ch1">
+  <header class="chapter-header">
+    <span class="chapter-num">I</span>
+    <h2 class="chapter-title">잘 놀아야 잘 큰다</h2>
+  </header>
+  <div class="chapter-body">
+    <p>육아에 관심을 갖기 시작한 건 놀랍도록 이른 시절이었다. 일곱 살, 또래 아이들이 뛰어놀 나이에 나는 어딘가에서 육아 영상을 분석하듯 보고 있었다. '잘 놀아야 잘 큰다'는 말이 그때부터 마음에 새겨졌다.</p>
+    <p>왜 그랬을까. 아마도 아이다움이 무엇인지, 어른이 아이에게 해줄 수 있는 것이 무엇인지에 대한 본능적인 감각이 있었던 것 같다. 배워서 생긴 생각이 아니라, 그냥 느껴졌던 것들.</p>
+    <div class="pullquote">
+      <p>잘 논다는 것은 단순히 즐기는 것이 아니다. 세상을 처음 배우는 방식이고, 스스로를 발견하는 과정이다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- CH 2 -->
+<article class="chapter" id="ch2">
+  <header class="chapter-header">
+    <span class="chapter-num">II</span>
+    <h2 class="chapter-title">시스템 밖의 아이들</h2>
+  </header>
+  <div class="chapter-body">
+    <p>국내 공교육 시스템에 오랫동안 답답함을 느껴왔다. 무조건 비판하고 싶지는 않다. 사회에 나와보니, 학교가 가르쳐준 것들이 일종의 기본 소양이었다는 걸 인정하게 되었다. 그것들이 없었다면 출발점조차 흔들렸을지 모른다.</p>
+    <p>그러나 문제는 다른 곳에 있다. 이미 구조화된 시스템을 모든 아이가 고르게 흡수하고, 그 시스템에 꼭 맞는 어른이 되기란 쉽지 않다. 틀이 하나일 때, 그 틀에서 비껴난 아이는 어떻게 되는가.</p>
+    <p>어떤 아이는 조용히, 어떤 아이는 소란스럽게 — 각자의 방식으로 시스템 밖을 맴돈다. 그 아이들이 틀린 것이 아니다. 다만 다른 것이다.</p>
+    <div class="pullquote">
+      <p>모든 아이가 하나의 틀에 맞춰질 수는 없다. 틀이 아이를 규정하는 것이 아니라, 아이가 자신만의 틀을 만들어간다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- CH 3 -->
+<article class="chapter" id="ch3">
+  <header class="chapter-header">
+    <span class="chapter-num">III</span>
+    <h2 class="chapter-title">받아쓰기 점수보다 중요한 것</h2>
+  </header>
+  <div class="chapter-body">
+    <p>그래서 나는 딸에게 받아쓰기 점수로 야단치지 않았다. 어른이 되어보니 세상에는 그것보다 중요한 일이 훨씬 많았다. 점수가 아니라 태도가, 성적이 아니라 방향이 삶을 더 오래 붙들어준다는 것을 알게 되었다.</p>
+    <p>대신 아이가 잘할 수 있는 것에 집중했다. 부족하다고 느끼는 부분은 강연을 함께 가거나 상담을 받으며 채워줬다. 그게 점수를 올리기 위해서가 아니라, 아이 스스로가 자신을 이해하고 단단해질 수 있도록.</p>
+    <div class="pullquote">
+      <p>아이에게 필요한 것은 더 높은 점수가 아니라, 자기 자신을 믿는 힘이었다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- CH 4 -->
+<article class="chapter" id="ch4">
+  <header class="chapter-header">
+    <span class="chapter-num">IV</span>
+    <h2 class="chapter-title">리액션이 좋은 아이</h2>
+  </header>
+  <div class="chapter-body">
+    <p>나의 딸은 리액션이 좋다. 조금 발표에 미숙한 친구가 수줍어서 말을 잇지 못할 때, 딸은 먼저 반응해준다. 고개를 끄덕이거나, 작은 박수를 치거나, 눈을 마주치며 괜찮다는 신호를 보낸다.</p>
+    <p>아이는 다양한 재능을 가졌다. 그러나 나는 사실 이 부분이 가장 뿌듯하다. 성적표에는 적히지 않는 것. 스펙이 되지 않는 것. 그러나 누군가의 하루를 조금 덜 외롭게 만드는 것.</p>
+    <p>세상에는 그런 사람이 필요하다. 그런 사람이 되는 법은, 점수로 가르칠 수 없다.</p>
+    <div class="pullquote">
+      <p>먼저 반응해주는 사람. 그게 딸이 가진 가장 큰 재능이라고 나는 생각한다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- CH 5 -->
+<article class="chapter" id="ch5">
+  <header class="chapter-header">
+    <span class="chapter-num">V</span>
+    <h2 class="chapter-title">멀리 있어도 손이 간다</h2>
+  </header>
+  <div class="chapter-body">
+    <p>아이는 멀리 있어도 손이 간다. 의식주를 해결해주는 것 외에도, 부모가 신경 써야 할 부분은 끝이 없다. 아이다움을 지켜주는 일, 갈등을 해결하는 법을 가르쳐주는 일, 상처 앞에서 무너지지 않도록 옆에 있어주는 일.</p>
+    <p>아이가 태어나는 순간부터 역할은 명확히 달라진다. 내 삶과 아이의 삶이 분리된 것 같으면서도, 늘 연결되어 있다. 나답게 살면서도 더불어 사는 것 — 어쩌면 내게도 영원한 숙제다.</p>
+    <p>그래서 강요하지 않는다. 내가 원하는 방향으로 아이를 밀어넣기보다, 아이가 스스로 걸어갈 수 있는 힘을 기르도록 곁에 있으려 한다.</p>
+    <div class="pullquote">
+      <p>강요하지 않는다는 것은 포기가 아니다. 믿는다는 것이다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- CH 6 -->
+<article class="chapter" id="ch6">
+  <header class="chapter-header">
+    <span class="chapter-num">VI</span>
+    <h2 class="chapter-title">나 자신을 지키는 법</h2>
+  </header>
+  <div class="chapter-body">
+    <p>나는 어린 시절부터 다양한 폭력에 노출되었다. 그 경험들이 내게 무언가를 남겼고, 그 무언가가 지금의 나를 만들었다. 상처가 지혜가 되기까지는 오랜 시간이 걸렸다.</p>
+    <p>딸과 물리적으로 먼 거리에 있는 지금, 아이에게 가장 가르쳐야 할 것은 무엇일까 자주 생각한다. 좋은 대학, 좋은 직업, 좋은 사람을 만나는 법? 그것들도 중요하다. 하지만 그 전에 — 나 자신을 지키는 법.</p>
+    <p>자신을 지킬 줄 아는 사람은, 다른 사람도 지킬 수 있다. 자신을 존중하는 사람은, 타인도 존중할 수 있다. 그것이 먼저다.</p>
+    <div class="pullquote">
+      <p>세상에서 가장 먼저 지켜야 할 사람은 자기 자신이다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- CH 7 -->
+<article class="chapter" id="ch7">
+  <header class="chapter-header">
+    <span class="chapter-num">VII</span>
+    <h2 class="chapter-title">동등한 대화</h2>
+  </header>
+  <div class="chapter-body">
+    <p>12세가 된 딸은 이미 자아가 충분히 생겼다. 내가 원하는 대로 빚을 수 있는 존재가 아니라, 자신만의 생각과 언어를 가진 사람이다. 그것이 때로는 낯설고, 때로는 경이롭다.</p>
+    <p>나는 판단할 재료를 주고 스스로 생각하게 한다. 정답을 알려주는 것이 아니라, 질문하는 법을 보여주려 한다. 요즘 아이와 만나면 점점 동등한 대화가 가능해진다는 느낌을 받는다. 가르치는 것이 아니라, 같이 이야기하는 것.</p>
+    <p>진심으로 딸이 딸답게 살기를. 누군가의 기대에 맞춰진 삶이 아니라, 자신이 고른 삶을. 그 여정에서 내가 줄 수 있는 가장 큰 것은 — 믿음이라고 생각한다.</p>
+    <div class="pullquote">
+      <p>딸이 딸답게 사는 것. 그것이 내가 바라는 전부다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="closing-inner">
+    <div class="closing-ornament">∞</div>
+    <p class="closing-text">
+      아이를 키운다는 것은<br>
+      결국 나를 다시 키우는 일이기도 하다.<br><br>
+      딸에게, 그리고 여전히 성장 중인<br>
+      나 자신에게.
+    </p>
+    <p class="closing-author">— 엄마가 쓴 글</p>
+  </div>
+</section>
+
+<script>
+  const chapters = document.querySelectorAll('.chapter');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  chapters.forEach(ch => observer.observe(ch));
+</script>
+</body>
+</html>
